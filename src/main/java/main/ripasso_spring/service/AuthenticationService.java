@@ -1,6 +1,5 @@
 package main.ripasso_spring.service;
 
-import lombok.RequiredArgsConstructor;
 import main.ripasso_spring.model.dto.AuthenticationRequest;
 import main.ripasso_spring.model.dto.AuthenticationResponse;
 import main.ripasso_spring.model.dto.RefreshTokenRequest;
@@ -12,11 +11,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class AuthenticationService {
         private final JwtService jwtService;
         private final UserDetailsService userDetailsService;
         private final AuthenticationManager authenticationManager;
+
+        public AuthenticationService(
+                        JwtService jwtService,
+                        UserDetailsService userDetailsService,
+                        AuthenticationManager authenticationManager) {
+                this.jwtService = jwtService;
+                this.userDetailsService = userDetailsService;
+                this.authenticationManager = authenticationManager;
+        }
 
         public AuthenticationResponse authenticate(AuthenticationRequest request) {
                 authenticationManager.authenticate(

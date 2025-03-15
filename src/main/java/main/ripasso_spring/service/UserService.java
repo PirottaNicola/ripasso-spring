@@ -4,7 +4,6 @@ import main.ripasso_spring.exception.UserAlreadyExistsException;
 import main.ripasso_spring.model.entity.User;
 import main.ripasso_spring.model.entity.UserId;
 import main.ripasso_spring.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
