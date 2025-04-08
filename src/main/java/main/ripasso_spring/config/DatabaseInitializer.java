@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+// This class is a configuration class, it defines beans that will be managed by Spring
 @Configuration
 public class DatabaseInitializer {
 
@@ -15,12 +16,11 @@ public class DatabaseInitializer {
     // The UserRepository and PasswordEncoder are injected into this method
     // The CommandLineRunner interface is used to execute code after the application
     // starts
-    // The args parameter is not used in this case
     // The UserRepository is used to save the users to the database
 
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        return args -> {
+        return _ -> {
             // Create test users if they don't exist
             if (userRepository.findByEmail("admin@example.com").isEmpty()) {
                 User admin = new User();
