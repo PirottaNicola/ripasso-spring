@@ -20,7 +20,7 @@ public class DatabaseInitializer {
 
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        return _ -> {
+        return args -> {
             // Create test users if they don't exist
             if (userRepository.findByEmail("admin@example.com").isEmpty()) {
                 User admin = new User();
