@@ -2,70 +2,93 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<!-- Inherit defaults from Spring Boot -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
+	<!-- Project coordinates -->
 	<groupId>main</groupId>
 	<artifactId>ripasso-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ripasso-spring</name>
 	<description>Demo project for Spring Boot</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
+	<!-- ... other metadata ... -->
 	<scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
 		<url/>
 	</scm>
+
+	<!-- Distribution Management (maven deploy command) - Specify deployment repository -->
+	<distributionManagement>
+		<repository>
+			<id>your-repo-id</id> <!-- Replace with your repository ID -->
+			<name>Your Repository Name</name> <!-- Replace with your repository name -->
+			<url>your-repo-url</url> <!-- Replace with your repository URL -->
+		</repository>
+		<snapshotRepository>
+			<id>your-snapshot-repo-id</id> <!-- Replace with your snapshot repository ID -->
+			<name>Your Snapshot Repository Name</name> <!-- Replace with your snapshot repository name -->
+			<url>your-snapshot-repo-url</url> <!-- Replace with your snapshot repository URL -->
+		</snapshotRepository>
+	</distributionManagement>
+
+	<!-- Project properties -->
 	<properties>
-		<java.version>23</java.version>
+		<java.version>24</java.version> <!-- Specify Java version -->
 	</properties>
+
+	<!-- Project dependencies -->
 	<dependencies>
 
+		<!-- Spring Boot Actuator for monitoring and management -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
+		<!-- Spring Data JPA for database access -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<!-- Spring Web for building web applications -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- Spring Boot DevTools for development-time features -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		<!-- Lombok for reducing boilerplate code -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- Spring Boot Starter Test for testing -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-				<dependency>
+		<!-- H2 Database for in-memory database -->
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- JWT libraries for token-based authentication -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -83,18 +106,22 @@
 			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Spring Security for authentication and authorization -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 	</dependencies>
 
+	<!-- Build configuration -->
 	<build>
 		<plugins>
+			<!-- Maven Compiler Plugin configuration -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<!-- Configure Lombok annotation processor -->
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
@@ -103,12 +130,13 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+			<!-- Spring Boot Maven Plugin for packaging and running the application -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<excludes>
-						<exclude>
+						<exclude> <!-- Exclude the dependecies that are not needed in the final jar -->
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
