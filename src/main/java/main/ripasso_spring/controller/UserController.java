@@ -23,19 +23,35 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
+            // Validate user data
             User createdUser = userService.createUser(user);
-            return ResponseEntity.ok(createdUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+
+        } catch (IllegalArgumentException e) {
+            // Handle specific exception for invalid user data
+            Map<String, String> response = new HashMap<>();
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (UserAlreadyExistsException e) {
+            // Handle specific exception for user already exists
             Map<String, String> response = new HashMap<>();
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        } catch (Exception e) {
+            // Handle unexpected exceptions
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "An unexpected error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
+
     }
 
-    @ExceptionHandler()
+    // * here we define specific exception handlers for the controller
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<?> handleUserAlreadyExists(UserAlreadyExistsException e) {
         Map<String, String> response = new HashMap<>();
         response.put("error", e.getMessage());
